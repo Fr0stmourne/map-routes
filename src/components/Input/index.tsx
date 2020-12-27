@@ -9,13 +9,12 @@ const Input: FC<Props> = React.memo(({ onAddButtonClick }: Props) => {
 
   const handleInput = (e: FormEvent) => {
     e.preventDefault();
-    if (inputRef && inputRef.current)
-      onAddButtonClick(inputRef.current.value || '');
+    if (inputRef && inputRef.current) onAddButtonClick(inputRef.current.value);
   };
 
   return (
     <form onSubmit={handleInput}>
-      <input ref={inputRef} type="text" />
+      <input ref={inputRef} type="text" required />
       <button type="submit">Добавить</button>
     </form>
   );

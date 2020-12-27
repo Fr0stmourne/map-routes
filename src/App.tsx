@@ -61,6 +61,10 @@ const App: FC = () => {
     });
   };
 
+  const onDeleteClick = (id: string) => {
+    setMapPoints((points) => points.filter((point) => point.id !== id));
+  };
+
   return (
     <div className={b()}>
       <Input onAddButtonClick={onAddButtonClick} />
@@ -68,6 +72,8 @@ const App: FC = () => {
         {mapPoints &&
           mapPoints.map((el, index) => (
             <RoutePoint
+              onDeleteButtonClick={onDeleteClick}
+              id={el.id}
               key={String(index)}
               text={`${el.description} - ${el.lat.toFixed(4)}, ${el.lng.toFixed(
                 4
