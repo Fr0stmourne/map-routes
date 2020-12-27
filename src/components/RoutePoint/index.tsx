@@ -12,12 +12,12 @@ type Props = {
 
 const RoutePoint: FC<Props> = ({ text, id, onDeleteButtonClick }: Props) => {
   return (
-    <li className={b()}>
+    <div className={b()}>
       {text}
       <button type="button" onClick={() => onDeleteButtonClick(id)}>
         Delete
       </button>
-    </li>
+    </div>
   );
 };
 

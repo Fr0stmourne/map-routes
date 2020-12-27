@@ -1,14 +1,8 @@
 import block from 'bem-cn';
 import React, { FC, useCallback, useState } from 'react';
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  InfoWindow,
-  Polyline,
-} from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Polyline } from '@react-google-maps/api';
 import { nanoid } from 'nanoid';
-
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Input } from './components/Input';
 import { RoutePoint } from './components/RoutePoint';
 import { MapPoint } from './Models/models';
@@ -61,6 +55,8 @@ const App: FC = () => {
     });
   };
 
+  const formatCoordinate = (coord: number) => coord.toFixed(4);
+
   const onDeleteClick = (id: string) => {
     setMapPoints((points) => points.filter((point) => point.id !== id));
   };
@@ -68,41 +64,70 @@ const App: FC = () => {
   return (
     <div className={b()}>
       <Input onAddButtonClick={onAddButtonClick} />
-      <ul className={b('list')}>
-        {mapPoints &&
-          mapPoints.map((el, index) => (
-            <RoutePoint
-              onDeleteButtonClick={onDeleteClick}
-              id={el.id}
-              key={String(index)}
-              text={`${el.description} - ${el.lat.toFixed(4)}, ${el.lng.toFixed(
-                4
-              )}`}
-            />
-          ))}
-      </ul>
-      <LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY as string}>
-        <GoogleMap
-          onLoad={(map) => {
-            setMapInstance(map);
-          }}
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={15}
-        >
-          {mapPoints &&
-            mapPoints.map((point) => (
-              <MapMarker
-                onMarkerDrag={onMarkerDrag}
-                key={point.description + point.lat}
-                point={point}
-              />
-            ))}
-          <Polyline
-            path={mapPoints.map(({ lat, lng }) => ({ lat, lng }))}
-          ></Polyline>
-        </GoogleMap>
-      </LoadScript>
+      <DragDropContext
+        onDragEnd={(result) => {
+          const updatedMapPoints = [...mapPoints];
+          const [reordered] = updatedMapPoints.splice(result.source.index, 1);
+          if (result.destination) {
+            updatedMapPoints.splice(result.destination.index, 0, reordered);
+            setMapPoints(updatedMapPoints);
+          }
+        }}
+      >
+        <Droppable droppableId="routes-list">
+          {(providedDrop) => (
+            <ul
+              className={b('list')}
+              ref={providedDrop.innerRef}
+              {...providedDrop.droppableProps}
+            >
+              {mapPoints &&
+                mapPoints.map((el, index) => (
+                  <Draggable draggableId={el.id} index={index} key={el.id}>
+                    {(providedDrag) => (
+                      <li
+                        ref={providedDrag.innerRef}
+                        {...providedDrag.draggableProps}
+                        {...providedDrag.dragHandleProps}
+                      >
+                        <RoutePoint
+                          onDeleteButtonClick={onDeleteClick}
+                          id={el.id}
+                          text={`${el.description} - ${formatCoordinate(
+                            el.lat
+                          )}, ${formatCoordinate(el.lng)}`}
+                        />
+                      </li>
+                    )}
+                  </Draggable>
+                ))}
+              {providedDrop.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
+      {process.env.REACT_APP_API_KEY && (
+        <LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
+          <GoogleMap
+            onLoad={(map) => {
+              setMapInstance(map);
+            }}
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={15}
+          >
+            {mapPoints &&
+              mapPoints.map((point) => (
+                <MapMarker
+                  onMarkerDrag={onMarkerDrag}
+                  key={point.id}
+                  point={point}
+                />
+              ))}
+            <Polyline path={mapPoints.map(({ lat, lng }) => ({ lat, lng }))} />
+          </GoogleMap>
+        </LoadScript>
+      )}
     </div>
   );
 };
