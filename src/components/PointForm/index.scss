@@ -1,0 +1,36 @@
+@import '../../utils/scss/variables.scss';
+
+.point-form {
+  position: relative;
+
+  &__input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    padding-right: 45px;
+    font: inherit;
+  }
+
+  &__button {
+    position: absolute;
+    background-color: transparent;
+    border: 0;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    outline: 0;
+  }
+
+  &__button:hover &__add-icon,
+  &__button:focus &__add-icon {
+    fill: green;
+  }
+
+  &__add-icon {
+    width: 20px;
+    height: 20px;
+    transition: $core-tr;
+    pointer-events: none;
+  } 
+}

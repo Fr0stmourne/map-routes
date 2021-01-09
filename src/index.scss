@@ -12,7 +12,11 @@ code {
     monospace;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 iframe
 {
-    display: none;
+  display: none;
 }

@@ -1,17 +1,20 @@
 import block from 'bem-cn';
-import React, { FC, useCallback, useState } from 'react';
+import React, { CSSProperties, FC, useCallback, useState } from 'react';
 import { GoogleMap, LoadScript, Polyline } from '@react-google-maps/api';
 import { nanoid } from 'nanoid';
+
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Input } from './components/Input';
-import { RoutePoint } from './components/RoutePoint';
-import { MapPoint } from './Models/models';
-import { MapMarker } from './components/MapMarker';
+import { PointForm } from '../PointForm';
+import { RoutePoint } from '../RoutePoint';
+import { MapPoint } from '../../models/models';
+import { MapMarker } from '../MapMarker';
+import './index.scss';
 
 const b = block('app');
-const containerStyle = {
-  width: '400px',
-  height: '400px',
+const containerStyle: CSSProperties = {
+  width: '100%',
+  height: '100%',
+  minHeight: '100vh',
 };
 
 const center = { lat: 59.988933, lng: 30.255913 };
@@ -55,57 +58,57 @@ const App: FC = () => {
     });
   };
 
-  const formatCoordinate = (coord: number) => coord.toFixed(4);
-
   const onDeleteClick = (id: string) => {
     setMapPoints((points) => points.filter((point) => point.id !== id));
   };
 
   return (
     <div className={b()}>
-      <Input onAddButtonClick={onAddButtonClick} />
-      <DragDropContext
-        onDragEnd={(result) => {
-          const updatedMapPoints = [...mapPoints];
-          const [reordered] = updatedMapPoints.splice(result.source.index, 1);
-          if (result.destination) {
-            updatedMapPoints.splice(result.destination.index, 0, reordered);
-            setMapPoints(updatedMapPoints);
-          }
-        }}
-      >
-        <Droppable droppableId="routes-list">
-          {(providedDrop) => (
-            <ul
-              className={b('list')}
-              ref={providedDrop.innerRef}
-              {...providedDrop.droppableProps}
-            >
-              {mapPoints &&
-                mapPoints.map((el, index) => (
-                  <Draggable draggableId={el.id} index={index} key={el.id}>
-                    {(providedDrag) => (
-                      <li
-                        ref={providedDrag.innerRef}
-                        {...providedDrag.draggableProps}
-                        {...providedDrag.dragHandleProps}
-                      >
-                        <RoutePoint
-                          onDeleteButtonClick={onDeleteClick}
-                          id={el.id}
-                          text={`${el.description} - ${formatCoordinate(
-                            el.lat
-                          )}, ${formatCoordinate(el.lng)}`}
-                        />
-                      </li>
-                    )}
-                  </Draggable>
-                ))}
-              {providedDrop.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <div className={b('routes')}>
+        <div className={b('input')}>
+          <PointForm onAddButtonClick={onAddButtonClick} />
+        </div>
+        <DragDropContext
+          onDragEnd={(result) => {
+            const updatedMapPoints = [...mapPoints];
+            const [reordered] = updatedMapPoints.splice(result.source.index, 1);
+            if (result.destination) {
+              updatedMapPoints.splice(result.destination.index, 0, reordered);
+              setMapPoints(updatedMapPoints);
+            }
+          }}
+        >
+          <Droppable droppableId="routes-list">
+            {(providedDrop) => (
+              <ul
+                className={b('list')}
+                ref={providedDrop.innerRef}
+                {...providedDrop.droppableProps}
+              >
+                {mapPoints &&
+                  mapPoints.map((el, index) => (
+                    <Draggable draggableId={el.id} index={index} key={el.id}>
+                      {(providedDrag) => (
+                        <li
+                          className={b('route-point')}
+                          ref={providedDrag.innerRef}
+                          {...providedDrag.draggableProps}
+                          {...providedDrag.dragHandleProps}
+                        >
+                          <RoutePoint
+                            onDeleteButtonClick={onDeleteClick}
+                            point={el}
+                          />
+                        </li>
+                      )}
+                    </Draggable>
+                  ))}
+                {providedDrop.placeholder}
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
       {process.env.REACT_APP_API_KEY && (
         <LoadScript googleMapsApiKey={process.env.REACT_APP_API_KEY}>
           <GoogleMap
