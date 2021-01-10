@@ -6,12 +6,12 @@ import {
   ItemDragHandler,
   MapPoint,
 } from '../../models/models';
-import { RoutePoint } from '../Point';
+import { Point } from '../Point';
 import './index.scss';
 
 const b = block('point-list');
 
-type Props = {
+export type Props = {
   mapPoints: MapPoint[];
   onDeleteClick: DeleteClickHandler;
   onDragEnd: ItemDragHandler;
@@ -41,10 +41,7 @@ const PointList: FC<Props> = ({
                       {...providedDrag.draggableProps}
                       {...providedDrag.dragHandleProps}
                     >
-                      <RoutePoint
-                        onDeleteButtonClick={onDeleteClick}
-                        point={el}
-                      />
+                      <Point onDeleteButtonClick={onDeleteClick} point={el} />
                     </li>
                   )}
                 </Draggable>

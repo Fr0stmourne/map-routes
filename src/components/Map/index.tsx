@@ -42,4 +42,4 @@ const Map: FC<Props> = ({ setMapInstance, onMarkerDrag, mapPoints }: Props) => {
   ) : null;
 };
 
-export default React.memo(Map);
+export { Map };

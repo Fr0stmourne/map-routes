@@ -1,17 +1,17 @@
 import block from 'bem-cn';
 import React, { FC } from 'react';
-import { MapPoint } from '../../models/models';
+import { DeleteClickHandler, MapPoint } from '../../models/models';
 import { formatCoordinate } from '../../utils/ts/formatCoordinate';
 import './index.scss';
 
 const b = block('route-point');
 
-type Props = {
+export type Props = {
   point: MapPoint;
-  onDeleteButtonClick: (id: MapPoint['id']) => void;
+  onDeleteButtonClick: DeleteClickHandler;
 };
 
-const RoutePoint: FC<Props> = ({
+const Point: FC<Props> = ({
   point: { id, lat, lng, description },
   onDeleteButtonClick,
 }: Props) => {
@@ -37,4 +37,4 @@ const RoutePoint: FC<Props> = ({
   );
 };
 
-export { RoutePoint };
+export { Point };

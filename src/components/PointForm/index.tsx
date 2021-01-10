@@ -2,13 +2,13 @@ import block from 'bem-cn';
 import React, { FC, FormEvent, MouseEvent, useRef } from 'react';
 import './index.scss';
 
-type Props = {
+export type Props = {
   onAddButtonClick: (value: string) => void;
 };
 
 const b = block('point-form');
 
-const PointForm: FC<Props> = React.memo(({ onAddButtonClick }: Props) => {
+const PointForm: FC<Props> = ({ onAddButtonClick }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInput = (e: FormEvent) => {
@@ -32,6 +32,6 @@ const PointForm: FC<Props> = React.memo(({ onAddButtonClick }: Props) => {
       </button>
     </form>
   );
-});
+};
 
 export { PointForm };

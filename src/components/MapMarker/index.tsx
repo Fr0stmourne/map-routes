@@ -2,7 +2,7 @@ import { Marker, InfoWindow } from '@react-google-maps/api';
 import React, { FC, useState } from 'react';
 import { MapPoint, MarkerDragHandler } from '../../models/models';
 
-type Props = {
+export type Props = {
   point: MapPoint;
   onMarkerDrag: MarkerDragHandler;
 };
