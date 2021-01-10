@@ -1,0 +1,11 @@
+.point-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  &__route-point {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+}

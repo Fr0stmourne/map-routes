@@ -1,10 +1,10 @@
 import { Marker, InfoWindow } from '@react-google-maps/api';
 import React, { FC, useState } from 'react';
-import { MapPoint } from '../../models/models';
+import { MapPoint, MarkerDragHandler } from '../../models/models';
 
 type Props = {
   point: MapPoint;
-  onMarkerDrag: (e: google.maps.MapMouseEvent, id: string) => void;
+  onMarkerDrag: MarkerDragHandler;
 };
 
 const MapMarker: FC<Props> = ({ point, onMarkerDrag }: Props) => {
