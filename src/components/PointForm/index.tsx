@@ -3,12 +3,16 @@ import React, { FC, FormEvent, MouseEvent, useRef } from 'react';
 import './index.scss';
 
 export type Props = {
+  placeholder?: string;
   onAddButtonClick: (value: string) => void;
 };
 
 const b = block('point-form');
 
-const PointForm: FC<Props> = ({ onAddButtonClick }: Props) => {
+const PointForm: FC<Props> = ({
+  placeholder = 'Название точки',
+  onAddButtonClick,
+}: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInput = (e: FormEvent) => {
@@ -24,7 +28,14 @@ const PointForm: FC<Props> = ({ onAddButtonClick }: Props) => {
 
   return (
     <form className={b()} onSubmit={handleInput}>
-      <input className={b('input')} ref={inputRef} type="text" required />
+      <input
+        name="point-input"
+        className={b('input')}
+        ref={inputRef}
+        placeholder={placeholder}
+        type="text"
+        required
+      />
       <button onClick={handleButtonClick} className={b('button')} type="submit">
         <svg className={b('add-icon')}>
           <use href="/assets/img/sprites/icons.svg#add" />
