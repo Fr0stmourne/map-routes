@@ -1,11 +1,22 @@
-/* eslint-disable no-undef */
-
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import React, { HTMLAttributes } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { MapMarker, Props } from '../../../components/MapMarker';
 
 let fixture: Props;
-jest.mock('@react-google-maps/api');
+const mockInfoWindowContent = 'point description';
+const mockMarkerContent = 'test marker';
+
+jest.mock('@react-google-maps/api', () => {
+  return {
+    InfoWindow: () => <div>{mockInfoWindowContent}</div>,
+    Marker: ({ children, onClick }: HTMLAttributes<HTMLButtonElement>) => (
+      <button type="button" onClick={onClick}>
+        {mockMarkerContent}
+        {children}
+      </button>
+    ),
+  };
+});
 
 describe('MapMarker', () => {
   beforeEach(() => {
@@ -14,7 +25,7 @@ describe('MapMarker', () => {
         id: '123',
         lat: 5.04,
         lng: 22.2,
-        description: 'Test point',
+        description: mockInfoWindowContent,
       },
       onMarkerDrag: jest.fn(),
     };
@@ -26,13 +37,11 @@ describe('MapMarker', () => {
     expect(queryByText(fixture.point.description)).not.toBeInTheDocument();
   });
 
-  test('should show', () => {
+  test('should show description on marker click', () => {
     const { queryByText } = render(<MapMarker {...fixture} />);
 
-    // TODO
+    fireEvent.click(screen.getByText(mockMarkerContent));
 
-    // fireEvent.click
-
-    // expect(queryByText(fixture.point.description)).not.toBeInTheDocument();
+    expect(queryByText(mockInfoWindowContent)).toBeInTheDocument();
   });
 });
