@@ -1,7 +1,7 @@
 import block from 'bem-cn';
 import React, { FC } from 'react';
 import { testIDs } from '../../testIDs';
-import { DeleteClickHandler, MapPoint } from '../../models/models';
+import { DeleteClickHandler, MapPoint } from '../../models';
 import { formatCoordinate } from '../../utils/ts/formatCoordinate';
 import './index.scss';
 

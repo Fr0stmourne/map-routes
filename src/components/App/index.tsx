@@ -9,7 +9,7 @@ import {
   MarkerDragHandler,
   DeleteClickHandler,
   AddClickHandler,
-} from '../../models/models';
+} from '../../models';
 import { Map } from '../Map';
 import './index.scss';
 import { PointList } from '../PointList';

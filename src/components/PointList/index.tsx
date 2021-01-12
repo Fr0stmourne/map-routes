@@ -1,11 +1,7 @@
 import block from 'bem-cn';
 import React, { FC } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import {
-  DeleteClickHandler,
-  ItemDragHandler,
-  MapPoint,
-} from '../../models/models';
+import { DeleteClickHandler, ItemDragHandler, MapPoint } from '../../models';
 import { Point } from '../Point';
 import './index.scss';
 import { testIDs } from '../../testIDs';

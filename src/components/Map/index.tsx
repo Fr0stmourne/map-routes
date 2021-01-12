@@ -1,6 +1,6 @@
 import { LoadScript, GoogleMap, Polyline } from '@react-google-maps/api';
 import React, { CSSProperties, FC } from 'react';
-import { MapPoint, MarkerDragHandler } from '../../models/models';
+import { MapPoint, MarkerDragHandler } from '../../models';
 import { MapMarker } from '../MapMarker';
 
 type Props = {

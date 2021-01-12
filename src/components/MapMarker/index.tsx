@@ -1,6 +1,6 @@
 import { Marker, InfoWindow } from '@react-google-maps/api';
 import React, { FC, useState } from 'react';
-import { MapPoint, MarkerDragHandler } from '../../models/models';
+import { MapPoint, MarkerDragHandler } from '../../models';
 
 export type Props = {
   point: MapPoint;
