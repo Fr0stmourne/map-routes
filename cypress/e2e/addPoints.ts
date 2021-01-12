@@ -13,4 +13,14 @@ describe('addPoints', () => {
       .children()
       .should('have.length', 3);
   });
+
+  it('should not append new item if no name is passed', () => {
+    cy.visit('/')
+
+      .addPointWithEnterKey('')
+
+      .getElement(testIDs.list)
+      .children()
+      .should('have.length', 0);
+  });
 });
