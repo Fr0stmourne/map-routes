@@ -8,6 +8,7 @@ import {
 } from '../../models/models';
 import { Point } from '../Point';
 import './index.scss';
+import { testIDs } from '../../testIDs';
 
 const b = block('point-list');
 
@@ -30,6 +31,7 @@ const PointList: FC<Props> = ({
             className={b()}
             ref={providedDrop.innerRef}
             {...providedDrop.droppableProps}
+            data-testid={testIDs.list}
           >
             {mapPoints &&
               mapPoints.map((el, index) => (

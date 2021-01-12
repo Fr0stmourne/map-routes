@@ -1,5 +1,6 @@
 import block from 'bem-cn';
 import React, { FC, FormEvent, MouseEvent, useRef } from 'react';
+import { testIDs } from '../../testIDs';
 import './index.scss';
 
 export type Props = {
@@ -19,11 +20,13 @@ const PointForm: FC<Props> = ({
     e.preventDefault();
     if (inputRef && inputRef.current) {
       onAddButtonClick(inputRef.current.value);
+      inputRef.current.value = '';
     }
   };
 
   const handleButtonClick = (e: MouseEvent): void => {
-    (e.target as HTMLInputElement).blur();
+    const button = e.target as HTMLInputElement;
+    button.blur();
   };
 
   return (
@@ -31,6 +34,7 @@ const PointForm: FC<Props> = ({
       <input
         name="point-input"
         className={b('input')}
+        data-testid={testIDs.input}
         ref={inputRef}
         placeholder={placeholder}
         type="text"

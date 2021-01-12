@@ -1,5 +1,6 @@
 import block from 'bem-cn';
 import React, { FC } from 'react';
+import { testIDs } from '../../testIDs';
 import { DeleteClickHandler, MapPoint } from '../../models/models';
 import { formatCoordinate } from '../../utils/ts/formatCoordinate';
 import './index.scss';
@@ -26,6 +27,7 @@ const Point: FC<Props> = ({
       <button
         className={b('delete')}
         type="button"
+        data-testid={testIDs.delete}
         aria-label="Удалить"
         onClick={() => onDeleteButtonClick(id)}
       >
