@@ -2,10 +2,14 @@
 
 .app {
   display: grid;
-  grid-template-columns: minmax(100px, 300px) 0 1fr;
+  grid-template-columns: minmax(170px, 300px) 0 minmax(200px, 1fr);
   gap: 10px;
   background-color: $primary-bg;
   font-family: 'Open Sans', Arial, sans-serif;
+
+  @media (max-width: $mobile) {
+    gap: 0;
+  }
 
   &__routes {
     max-height: 100vh;

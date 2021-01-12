@@ -8,6 +8,10 @@
   display: flex;
   justify-content: space-between;
 
+  @media (max-width: $mobile) {
+    padding: 5px;
+  }
+
   &__info {
     margin-right: 20px;
   }

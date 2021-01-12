@@ -9,6 +9,12 @@
     border-radius: 5px;
     padding-right: 45px;
     font: inherit;
+
+    @media (max-width: $mobile) {
+      padding: 10px 5px;
+      padding-right: 45px;
+      font-size: 12px;
+    }
   }
 
   &__button {
