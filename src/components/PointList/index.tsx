@@ -40,6 +40,7 @@ const PointList: FC<Props> = ({
                     <li
                       className={b('route-point')}
                       ref={providedDrag.innerRef}
+                      data-testid={testIDs.item}
                       {...providedDrag.draggableProps}
                       {...providedDrag.dragHandleProps}
                     >
