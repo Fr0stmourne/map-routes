@@ -11,7 +11,7 @@ const nthItemIncludesText = (n: number, text: string) => {
 };
 
 describe('DnD', () => {
-  it('should correctly reorder items in list', () => {
+  it('should correctly reorder items in the list', () => {
     cy.visit('/')
       .addPointWithEnterKey('Park')
       .addPointWithEnterKey('Shop')

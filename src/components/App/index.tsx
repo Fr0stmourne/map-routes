@@ -67,7 +67,9 @@ const App: FC = () => {
 
   return (
     <div className={b()}>
-      <div className={b('routes')}>
+      <h1 className={b('title')}>Редактор маршрутов</h1>
+      <section className={b('routes')}>
+        <h2 className={b('routes-title')}>Список точек</h2>
         <div className={b('input')}>
           <PointForm onAddButtonClick={handleAddButtonClick} />
         </div>
@@ -76,12 +78,15 @@ const App: FC = () => {
           onDragEnd={handleDragEnd}
           mapPoints={mapPoints}
         />
-      </div>
-      <Map
-        onMarkerDrag={handleMarkerDrag}
-        setMapInstance={setMapInstance}
-        mapPoints={mapPoints}
-      />
+      </section>
+      <section className={b('map')}>
+        <h2 className={b('map-title')}>Точки на карте</h2>
+        <Map
+          onMarkerDrag={handleMarkerDrag}
+          setMapInstance={setMapInstance}
+          mapPoints={mapPoints}
+        />
+      </section>
     </div>
   );
 };

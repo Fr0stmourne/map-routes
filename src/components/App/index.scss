@@ -1,14 +1,21 @@
 @import '../../utils/scss/variables.scss';
+@import '../../utils/scss/mixins.scss';
 
 .app {
   display: grid;
-  grid-template-columns: minmax(170px, 300px) 0 minmax(200px, 1fr);
+  grid-template-columns: minmax(170px, 300px) minmax(200px, 1fr);
   gap: 10px;
   background-color: $primary-bg;
   font-family: 'Open Sans', Arial, sans-serif;
 
   @media (max-width: $mobile) {
     gap: 0;
+  }
+
+  &__title,
+  &__routes-title,
+  &__map-title {
+    @include visually-hidden;
   }
 
   &__routes {
